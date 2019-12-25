@@ -21,8 +21,8 @@ Target DLL:      CMSIS_AGDI.dll V1.21.0.0
 Dialog DLL:      TCM.DLL V1.14.4.0
  
 <h2>Project:</h2>
-F:\微信文件\WeChat Files\sahaiata\FileStorage\File\2019-12\lll_sss-embedded_practice-master\embedded_practice\嵌入式实践\程序代码\test\Project\RVMDK（uv5）\Fire_uCOS.uvprojx
-Project File Date:  12/17/2019
+F:\Github\MyRepo\ESOP\程序代码\Project\RVMDK（uv5）\Fire_uCOS.uvprojx
+Project File Date:  12/25/2019
 
 <h2>Output:</h2>
 Rebuild target 'Fire_uCOS'
@@ -80,21 +80,23 @@ compiling app.c...
   #define ON  1
 ..\..\User\BSP\./beep/bsp_beep.h(15): warning:  #47-D: incompatible redefinition of macro "OFF" (declared at line 30 of "..\..\User\BSP\led\bsp_led.h")
   #define OFF 0
-..\..\User\APP\app.c(372): warning:  #550-D: variable "ts_int" was set but never used
+..\..\User\APP\app.c(70): warning:  #550-D: variable "con" was set but never used
+        struct connection con;
+..\..\User\APP\app.c(374): warning:  #550-D: variable "ts_int" was set but never used
         CPU_TS_TMR     ts_int;
-..\..\User\APP\app.c(373): warning:  #550-D: variable "cpu_clk_freq" was set but never used
+..\..\User\APP\app.c(375): warning:  #550-D: variable "cpu_clk_freq" was set but never used
         CPU_INT32U     cpu_clk_freq;
-..\..\User\APP\app.c(417): warning:  #177-D: variable "value" was declared but never referenced
+..\..\User\APP\app.c(419): warning:  #177-D: variable "value" was declared but never referenced
         OS_REG      value;      
-..\..\User\APP\app.c(444): warning:  #177-D: variable "value" was declared but never referenced
+..\..\User\APP\app.c(446): warning:  #177-D: variable "value" was declared but never referenced
         OS_REG      value;
-..\..\User\APP\app.c(473): warning:  #177-D: variable "value" was declared but never referenced
+..\..\User\APP\app.c(475): warning:  #177-D: variable "value" was declared but never referenced
         OS_REG      value;
-..\..\User\APP\app.c(495): warning:  #177-D: variable "cpu_sr" was declared but never referenced
+..\..\User\APP\app.c(497): warning:  #177-D: variable "cpu_sr" was declared but never referenced
         CPU_SR_ALLOC();      //使用到临界段（在关/开中断时）时必需该宏，该宏声明和定义一个局部变
-..\..\User\APP\app.c(545): warning:  #177-D: variable "value" was declared but never referenced
+..\..\User\APP\app.c(554): warning:  #177-D: variable "value" was declared but never referenced
         OS_REG      value;
-..\..\User\APP\app.c: 9 warnings, 0 errors
+..\..\User\APP\app.c: 10 warnings, 0 errors
 compiling os_app_hooks.c...
 compiling bsp_led.c...
 compiling bsp.c...
@@ -137,12 +139,12 @@ compiling os_var.c...
 assembling os_cpu_a.asm...
 compiling os_cpu_c.c...
 linking...
-Program Size: Code=33052 RO-data=936 RW-data=320 ZI-data=28120  
+Program Size: Code=33340 RO-data=936 RW-data=324 ZI-data=28116  
 FromELF: creating hex file...
-"..\..\Output\wzkFire_uCOS.axf" - 0 Error(s), 15 Warning(s).
+"..\..\Output\wzkFire_uCOS.axf" - 0 Error(s), 16 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
-  F:\微信文件\WeChat Files\sahaiata\FileStorage\File\2019-12\lll_sss-embedded_practice-master\embedded_practice\嵌入式实践\程序代码\test\Project\RVMDK（uv5）\RTE
+  F:\Github\MyRepo\ESOP\程序代码\Project\RVMDK（uv5）\RTE
   D:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.5.0
 
 <h2>Collection of Component Files used:</h2>
