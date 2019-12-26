@@ -14,11 +14,13 @@ static  OS_TCB   AppTaskStartTCB;    //任务控制块
 
 OS_TCB           AppTaskUsartTCB;
 OS_TCB           AppTaskKeyTCB;
+static OS_TCB   AppTaskckeyTCB;
 static  OS_TCB   AppTaskLed1TCB;
 static  OS_TCB   AppTaskLed2TCB;
 static  OS_TCB   AppTaskLed3TCB;
 static  OS_TCB   AppTaskTmrTCB;
 static  OS_TCB   AppTaskADCTCB;
+
 
 
 
@@ -31,6 +33,7 @@ static  CPU_STK  AppTaskLed2Stk [ APP_TASK_LED2_STK_SIZE ];
 static  CPU_STK  AppTaskLed3Stk [ APP_TASK_LED3_STK_SIZE ];
 static  CPU_STK  AppTaskTmrStk [ APP_TASK_TMR_STK_SIZE ];
 static  CPU_STK  AppTaskADCStk [ APP_TASK_ADC_STK_SIZE ];
+
 
 //extern char Usart_Rx_Buf[USART_RBUFF_SIZE];
 extern u8 Usart_Rx_Buf[USART_RBUFF_SIZE];
@@ -71,6 +74,7 @@ int  main (void)
 	con.head=0xaa;
 	con.tail=0xbb;
     OS_ERR  err;
+
 
     OSInit(&err);                                                           //初始化 uC/OS-III
 
@@ -228,7 +232,7 @@ static  void  AppTaskStart (void *p_arg)
                  (void       *) 0,                                          //任务扩展（0表不扩展）
                  (OS_OPT      )(OS_OPT_TASK_STK_CHK | OS_OPT_TASK_STK_CLR), //任务选项
                  (OS_ERR     *)&err);                                       //返回错误类型	
-								 
+
 
 		OSTaskSuspend ( & AppTaskTmrTCB, & err );
 								 
@@ -354,6 +358,13 @@ static  void  AppTaskUsart ( void * p_arg )
 												(OS_ERR  *)&err);                                        //返回错误类型
 				}
 				break;
+			case 0x07:
+				{if(msg.body==0x01){
+					OSTaskSemPost((OS_TCB  *)&AppTaskckeyTCB,                              //目标任务
+												(OS_OPT   )OS_OPT_POST_NONE,                             //没选项要求
+												(OS_ERR  *)&err);                                        //返回错误类型
+				}}
+				break;
 			default:break;
 		}
 	}
@@ -437,6 +448,7 @@ static  void  AppTaskLed1 ( void * p_arg )
 		
 		
 }
+
 
 
 
@@ -576,6 +588,8 @@ static  void  AppTaskADC ( void * p_arg )
 		
 }
 
+		
+		
 
 
 

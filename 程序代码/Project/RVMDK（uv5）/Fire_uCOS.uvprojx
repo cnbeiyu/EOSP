@@ -862,6 +862,16 @@
               <FileType>1</FileType>
               <FilePath>..\..\User\BSP\adc\bsp_adc.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_touchpad.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\BSP\TouchPad\bsp_touchpad.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_SysTick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\BSP\systick\bsp_SysTick.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

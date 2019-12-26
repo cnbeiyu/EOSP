@@ -48,6 +48,8 @@
 "..\..\output\bsp_exti.o"
 "..\..\output\bsp_beep.o"
 "..\..\output\bsp_adc.o"
+"..\..\output\bsp_touchpad.o"
+"..\..\output\bsp_systick.o"
 "..\..\output\cpu_core.o"
 "..\..\output\cpu_a.o"
 "..\..\output\cpu_c.o"

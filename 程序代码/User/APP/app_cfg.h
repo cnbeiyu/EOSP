@@ -56,6 +56,7 @@
 #define  APP_TASK_LED3_PRIO                         3
 #define  APP_TASK_TMR_PRIO                          3
 #define  APP_TASK_ADC_PRIO                          3
+#define  APP_TASK_ckey_PRIO                         3
 
 
 /*
@@ -74,6 +75,7 @@
 #define  APP_TASK_LED3_STK_SIZE                     512 
 #define  APP_TASK_TMR_STK_SIZE                      512
 #define  APP_TASK_ADC_STK_SIZE                      512 
+#define  APP_TASK_ckey_STK_SIZE                     128 
 
 
 /*
