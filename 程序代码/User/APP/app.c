@@ -76,7 +76,7 @@ int  main (void)
 
 	  /* 创建起始任务 */
     OSTaskCreate((OS_TCB     *)&AppTaskStartTCB,                            //任务控制块地址
-                 (CPU_CHAR   *)"Start",                            //任务名称
+                 (CPU_CHAR   *)"App Task Start",                            //任务名称
                  (OS_TASK_PTR ) AppTaskStart,                               //任务函数
                  (void       *) 0,                                          //传递给任务函数（形参p_arg）的实参
                  (OS_PRIO     ) APP_TASK_START_PRIO,                        //任务的优先级
@@ -95,7 +95,7 @@ int  main (void)
 
 
 
-static  void  Start (void *p_arg)
+static  void  AppTaskStart (void *p_arg)
 {
     CPU_INT32U  cpu_clk_freq;
     CPU_INT32U  cnts;
@@ -128,7 +128,7 @@ static  void  Start (void *p_arg)
 							 
 
     OSTaskCreate((OS_TCB     *)&AppTaskUsartTCB,                            //任务控制块地址
-                 (CPU_CHAR   *)"usart",                            //任务名称
+                 (CPU_CHAR   *)"App Task Usart",                            //任务名称
                  (OS_TASK_PTR ) AppTaskUsart,                               //任务函数
                  (void       *) 0,                                          //传递给任务函数（形参p_arg）的实参
                  (OS_PRIO     ) APP_TASK_USART_PRIO,                        //任务的优先级
@@ -237,18 +237,28 @@ static  void  Start (void *p_arg)
 		
 }
 
-typedef struct message{
+typedef struct {
 	u8 head;
 	u8 id;
 	u8 len;
 	u8 body;
 	u8 crc;
 	u8 tail;
-}msg;
-//msg m1;
-/*usart TASK*/
-static  void  usart ( void * p_arg )
-{ struct message msg;
+}m1;
+m1 msg;
+
+typedef struct {
+u8 head;
+u8 id;
+u8 len;
+u8 body1;
+u8 body2;
+u8 crc;
+u8 tail;
+}m2;
+m2 msg2;
+static  void  AppTaskUsart ( void * p_arg )
+{
 	OS_ERR         err;
   
 	CPU_SR_ALLOC();
@@ -391,10 +401,10 @@ static  void  AppTaskKey ( void * p_arg )
 		//if(pMsg[1]==1)
 		//printf("%d\n",strcmp(pMsg,"1"));
 		if(strcmp(pMsg,"1")==0)   //key1
-		{printf("aa 7 1 1 9 bb\n");
+		{printf("aa 07 01 01 09 bb\n");
 			printf("KEY1\n");}
 		else
-			{printf("aa 7 1 2 a bb\n"); 
+			{printf("aa 07 01 02 10 bb\n"); 
 			printf("KEY2\n");}        		
 		
 		OS_CRITICAL_EXIT();                               //退出临界段
@@ -495,7 +505,12 @@ void TmrCallback (OS_TMR *p_tmr, void *p_arg) //软件定时器MyTmr的回调函数
 	
 }
 
-
+void transfer(){
+msg2.head = msg.head;
+msg2.id = msg.id;
+msg2.len = msg.len;
+msg2.tail = msg.tail;
+}
 static  void  AppTaskTmr ( void * p_arg )
 {
 	OS_ERR      err;
@@ -512,7 +527,7 @@ static  void  AppTaskTmr ( void * p_arg )
                (OS_TICK              )20,                  //定时器周期重载值，依10Hz时基计算，即为1s
                (OS_OPT               )OS_OPT_TMR_PERIODIC, //周期性定时
                (OS_TMR_CALLBACK_PTR  )TmrCallback,         //回调函数
-               (void                *)"RUNING",       //传递实参给回调函数
+               (void                *)"aa 07 01 01 09 bb",       //传递实参给回调函数
                (OS_ERR              *)err);                //返回错误类型
 	/* 启动软件定时器 */						 
 	OSTmrStart ((OS_TMR   *)&my_tmr, //软件定时器对象
@@ -531,8 +546,10 @@ extern __IO uint16_t ADC_ConvertedValue;
 
 // 局部变量，用于保存转换计算后的电压值 	 
 float ADC_Vol; 
+u8 adc1;
+u8 adc2;
 static  void  AppTaskADC ( void * p_arg )
-{struct message msg;
+{
 	OS_ERR      err;
 	OS_REG      value;
 	CPU_TS         ts;
@@ -548,7 +565,11 @@ static  void  AppTaskADC ( void * p_arg )
 									 (CPU_TS   *)&ts,                   //获取信号量被发布的时间戳
 									 (OS_ERR   *)&err);                 //返回错误类型
 		ADC_Vol =(float) ADC_ConvertedValue/4096*(float)3.3; // 读取转换的AD值
-		printf("%x %x %x %.1f %x %x\n",msg.head,msg.id,msg.len,ADC_Vol,msg.crc,msg.tail); 
+		msg2.body1= (float) ADC_ConvertedValue/256*(float)3.3;
+		msg2.body2= (int) ADC_ConvertedValue%256*(float)3.3;
+		transfer();
+		msg2.crc = msg.id+msg.len+msg2.body1+(u8)msg2.body2;
+		printf("%x %x %x %x %x %x %x\n",msg2.head,msg2.id,msg2.len,msg2.body1,msg2.body2,msg2.crc,msg2.tail); 
 		printf("V = %.1f v \n",ADC_Vol);     
 	}
 

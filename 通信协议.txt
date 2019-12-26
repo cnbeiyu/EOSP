@@ -1,0 +1,15 @@
+头 id 长 文 和 尾
+aa 01 01 01 03 bb//开LED1 red
+aa 01 01 02 04 bb//关LED1
+aa 02 01 01 04 bb//开LED2 green
+aa 02 01 02 05 bb//关LED2
+aa 03 01 01 05 bb//开LED3 blue
+aa 03 01 02 06 bb//关LED3
+aa 04 01 01 06 bb//开beep
+aa 04 01 02 07 bb//关beep
+aa 05 01 01 07 bb//开软定时器心跳包
+aa 05 01 02 08 bb//关软定时器心跳包
+aa 06 01 01 08 bb//采集ADC，返回ADC为包格式
+key1//返回按键的包格式
+key2//返回按键的包格式
+"..\..\Output\WZKFire_uCOS.axf" - 0 Error(s), 15 Warning(s).
